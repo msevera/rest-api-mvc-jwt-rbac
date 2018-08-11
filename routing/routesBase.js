@@ -5,7 +5,7 @@ class RoutesBase {
   constructor(router, controllerClass) {
     this.router = router;
     this.ControllerClass = controllerClass;
-    this.uriGenerator = new URIGenerator();
+    this.uriGenerator = new URIGenerator(RoutesCollection);
   }
 
   register() {
@@ -16,7 +16,6 @@ class RoutesBase {
     return new this.ControllerClass(
         {
           uriGenerator: this.uriGenerator,
-          controllers: RoutesCollection,
           req,
           res,
         },

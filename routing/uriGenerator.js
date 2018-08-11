@@ -1,6 +1,10 @@
 const queryString = require('query-string');
 
 class URIGenerator {
+  constructor(routesCollection) {
+    this.controllers = routesCollection;
+  }
+
   getURI(routeData, params, id) {
     return new Promise((resolve) => {
       const uri = params ? this._bindParams(routeData.uri, params) : routeData.uri;
