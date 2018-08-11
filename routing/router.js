@@ -3,12 +3,13 @@ const IndexRoutes = require('./routes/indexRoutes');
 const BooksListRoutes = require('./routes/booksListRoutes');
 
 class Router {
-  constructor(app) {
+  constructor(app, repository) {
     this.app = app;
+    this.repository = repository;
     this.router = express.Router();
     this.routes = [
-      new IndexRoutes(this.router),
-      new BooksListRoutes(this.router),
+      new IndexRoutes(this.router, this.repository),
+      new BooksListRoutes(this.router, this.repository),
     ];
   }
 

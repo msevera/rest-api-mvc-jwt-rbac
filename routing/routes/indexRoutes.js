@@ -2,8 +2,8 @@ const IndexController = require('../../controllers/indexController');
 const RoutesBase = require('../routesBase');
 
 class IndexRoutes extends RoutesBase {
-  constructor(app) {
-    super(app, IndexController);
+  constructor(app, repository) {
+    super(app, repository, IndexController);
   }
 
   register() {

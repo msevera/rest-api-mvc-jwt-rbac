@@ -2,8 +2,9 @@ const URIGenerator = require('./uriGenerator');
 const RoutesCollection = require('./routesCollection');
 
 class RoutesBase {
-  constructor(router, controllerClass) {
+  constructor(router, repository, controllerClass) {
     this.router = router;
+    this.repository = repository;
     this.ControllerClass = controllerClass;
     this.uriGenerator = new URIGenerator(RoutesCollection);
   }
@@ -15,6 +16,7 @@ class RoutesBase {
   getControllerInstance(req, res) {
     return new this.ControllerClass(
         {
+          repository: this.repository,
           uriGenerator: this.uriGenerator,
           req,
           res,

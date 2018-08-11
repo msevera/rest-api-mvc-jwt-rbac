@@ -15,15 +15,14 @@ class URIGenerator {
   _bindParams(uri, params) {
     let match;
     let replacement;
-    let uriParam = uri;
     const replacedParams = [];
 
-    while (match = /:([\w_]+)\??/ig.exec(uriParam)) {
-      replacement = params[match[1]] || '';
+    while (match = /:([\w_]+)\??/ig.exec(uri)) {
+      replacement = params[match[1]].toString() || '';
       if (replacement === '') {
-        uriParam = uriParam.replace(`/${match[0]}`, '');
+        uri = uri.replace(`/${match[0]}`);
       } else {
-        uriParam = uriParam.replace(match[0], replacement);
+        uri = uri.replace(match[0], replacement);
         replacedParams.push(match[1]);
       }
     }
@@ -36,10 +35,10 @@ class URIGenerator {
     });
 
     if (Object.keys(paramsForQueryString).length > 0) {
-      uriParam = `${uriParam}?${queryString.stringify(paramsForQueryString)}`;
+      uri = `${uri}?${queryString.stringify(paramsForQueryString)}`;
     }
 
-    return uriParam;
+    return uri;
   }
 }
 

@@ -1,7 +1,7 @@
 class ControllerBase {
-  constructor({ uriGenerator, controllers, req, res }) {
+  constructor({ uriGenerator, repository, req, res }) {
+    this.repository = repository;
     this.uriGenerator = uriGenerator;
-    this.controllers = controllers;
     this.req = req;
     this.res = res;
     this.params = this.req.params;

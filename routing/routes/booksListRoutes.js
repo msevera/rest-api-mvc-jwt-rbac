@@ -2,8 +2,8 @@ const BooksListController = require('../../controllers/booksListController');
 const RoutesBase = require('../routesBase');
 
 class BooksListRoutes extends RoutesBase {
-  constructor(app) {
-    super(app, BooksListController);
+  constructor(app, repository) {
+    super(app, repository, BooksListController);
   }
 
   register() {
