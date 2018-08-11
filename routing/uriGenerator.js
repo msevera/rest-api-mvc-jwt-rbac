@@ -19,7 +19,7 @@ class URIGenerator {
     const replacedParams = [];
 
     while (match = /:([\w_]+)\??/ig.exec(uriParam)) {
-      replacement = params[match[1]] || '';
+      replacement = params[match[1]].toString() || '';
       if (replacement === '') {
         uriParam = uriParam.replace(`/${match[0]}`, '');
       } else {
