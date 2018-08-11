@@ -1,0 +1,10 @@
+{
+  "debug": true,
+  "api": {
+    "host": "",
+    "port": 3000,
+    "security": {
+      "jwtSecret": "secret"
+    }
+  }
+}
