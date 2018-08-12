@@ -5,7 +5,7 @@ const BooksListRoutesBuilder = require('./routing/routesBuilders/booksListRoutes
 
 class Server {
   constructor() {
-    this.router = new Router(this.app, [
+    this.router = new Router([
       new IndexRoutesBuilder(),
       new BooksListRoutesBuilder(),
     ]);
