@@ -1,8 +1,10 @@
 const Model = require('./model');
+const URIGenerator = require('../routing/uriGenerator');
 
 class BookModel extends Model {
   constructor(data, uriGenerator) {
     super(uriGenerator);
+    this.uriGenerator = URIGenerator;
     this.id = data._id;
     this.name = data.name;
     this.author = data.author;
@@ -25,7 +27,7 @@ class BookModel extends Model {
 
   async addLinks(resource) {
     const removeURI = await this.uriGenerator.getURI(
-        this.uriGenerator.controllers.BooksListController.removeBook,
+        'BooksListController_removeBook',
         { id: this.id },
     );
     if (removeURI) {
@@ -33,7 +35,7 @@ class BookModel extends Model {
     }
 
     const rateURI = await this.uriGenerator.getURI(
-        this.uriGenerator.controllers.BooksListController.rateBook,
+        'BooksListController_rateBook',
         { id: this.id },
     );
     if (rateURI) {
