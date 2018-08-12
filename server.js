@@ -3,11 +3,12 @@ const Router = require('./routing/router');
 const Repository = require('./repositories/repository');
 const IndexRoutesBuilder = require('./routing/routesBuilders/indexRoutesBuilder');
 const BooksListRoutesBuilder = require('./routing/routesBuilders/booksListRoutesBuilder');
+const db = require('./mock/db');
 
 class Server {
   constructor() {
-    this.repository = new Repository();
-    this.router = new Router(this.app, [
+    this.repository = new Repository(db);
+    this.router = new Router([
       new IndexRoutesBuilder(),
       new BooksListRoutesBuilder(),
     ]);

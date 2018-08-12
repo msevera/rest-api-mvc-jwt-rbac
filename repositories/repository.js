@@ -1,4 +1,3 @@
-const UserRepository = require('./userRepository');
 const BookRepository = require('./bookRepository');
 
 class Repository {
@@ -7,7 +6,6 @@ class Repository {
   }
 
   registerRepositories() {
-    this.user = new UserRepository(this._db);
     this.book = new BookRepository(this._db);
   }
 }
