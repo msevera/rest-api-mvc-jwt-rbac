@@ -5,7 +5,8 @@ class BooksListController extends ControllerBase {
   async getBook() {
     try {
       const { id } = this.params;
-      const bookModel = new BookModel({ _id: id });
+      const book = this.repository.book.getById(id);
+      const bookModel = new BookModel(book);
       const resource = await bookModel.getResource();
       this.ok(resource);
     } catch (err) {
@@ -17,7 +18,9 @@ class BooksListController extends ControllerBase {
     try {
       const { id } = this.params;
       const { rating } = this.body;
-      const bookModel = new BookModel({ _id: id, rating });
+      this.repository.book.rateBook(id, rating);
+      const book = this.repository.book.getById(id);
+      const bookModel = new BookModel(book);
       const resource = await bookModel.getResource();
       this.ok(resource);
     } catch (err) {
@@ -27,6 +30,8 @@ class BooksListController extends ControllerBase {
 
   async removeBook() {
     try {
+      const { id } = this.params;
+      this.repository.book.removeById(id);
       this.noContent();
     } catch (err) {
       this.error(err);

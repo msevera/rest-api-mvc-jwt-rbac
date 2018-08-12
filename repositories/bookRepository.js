@@ -6,6 +6,10 @@ class BookRepository extends RepositoryBase {
     this.booksCollection = db.books;
   }
 
+  getAllBooks() {
+    return this.booksCollection;
+  }
+
   getById(id) {
     return this.booksCollection.find(book => book._id == id);
   }

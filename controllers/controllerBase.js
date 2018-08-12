@@ -1,12 +1,13 @@
 const URIGenerator = require('../routing/uriGenerator');
 
 class ControllerBase {
-  constructor({ params, query, body, send }) {
+  constructor({ params, query, body, send, repository }) {
     this.uriGenerator = URIGenerator;
     this.params = params;
     this.query = query;
     this.body = body;
     this.send = send;
+    this.repository = repository;
   }
 
   error(err) {
