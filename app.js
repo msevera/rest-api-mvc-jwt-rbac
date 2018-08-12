@@ -11,6 +11,8 @@ class App {
     this.express.use(bodyParser.urlencoded({ extended: true }));
     this.express.use(bodyParser.json());
     this.expressRouter = express.Router();
+    this._registerRoute = this._registerRoute.bind(this);
+    this._buildControllerInstance = this._buildControllerInstance.bind(this);
   }
 
   _registerRoute(uri, httpMethod, boundAction) {
