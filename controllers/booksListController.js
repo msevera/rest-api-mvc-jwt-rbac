@@ -1,27 +1,12 @@
-const halson = require('halson');
 const ControllerBase = require('./controllerBase');
+const BookModel = require('../models/bookModel');
 
 class BooksListController extends ControllerBase {
   async getBook() {
     try {
       const { id } = this.params;
-      const resource = halson({ id });
-
-      const removeURI = await this.uriGenerator.getURI(
-          this.uriGenerator.controllers.BooksListController.removeBook,
-          { id },
-      );
-      if (removeURI) {
-        resource.addLink(removeURI.id, removeURI);
-      }
-
-      const rateURI = await this.uriGenerator.getURI(
-          this.uriGenerator.controllers.BooksListController.rateBook,
-          { id },
-      );
-      if (rateURI) {
-        resource.addLink(rateURI.id, rateURI);
-      }
+      const bookModel = new BookModel({ _id: id });
+      const resource = await bookModel.getResource();
       this.ok(resource);
     } catch (err) {
       this.error(err);
@@ -32,23 +17,8 @@ class BooksListController extends ControllerBase {
     try {
       const { id } = this.params;
       const { rating } = this.body;
-      const resource = halson({ id, rating });
-
-      const removeURI = await this.uriGenerator.getURI(
-          this.uriGenerator.controllers.BooksListController.removeBook,
-          { id },
-      );
-      if (removeURI) {
-        resource.addLink(removeURI.id, removeURI);
-      }
-
-      const rateURI = await this.uriGenerator.getURI(
-          this.uriGenerator.controllers.BooksListController.rateBook,
-          { id },
-      );
-      if (rateURI) {
-        resource.addLink(rateURI.id, rateURI);
-      }
+      const bookModel = new BookModel({ _id: id, rating });
+      const resource = await bookModel.getResource();
       this.ok(resource);
     } catch (err) {
       this.error(err);
@@ -57,10 +27,7 @@ class BooksListController extends ControllerBase {
 
   async removeBook() {
     try {
-      const { id } = this.params;
-      const resource = halson({ id });
-
-      this.ok(resource);
+      this.noContent();
     } catch (err) {
       this.error(err);
     }

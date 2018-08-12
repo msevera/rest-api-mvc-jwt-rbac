@@ -1,23 +1,43 @@
-const express = require('express');
-const IndexRoutes = require('./routes/indexRoutes');
-const BooksListRoutes = require('./routes/booksListRoutes');
+const RoutesCollection = require('./routesCollection');
 
 class Router {
-  constructor(app) {
+  constructor(app, routeBuilders) {
+    this.routeBuilders = routeBuilders;
     this.app = app;
-    this.router = express.Router();
-    this.routes = [
-      new IndexRoutes(this.router),
-      new BooksListRoutes(this.router),
-    ];
   }
 
   registerRoutes() {
-    this.routes.forEach(route => route.register());
-    this.app.use('/api/v1', this.router);
-    this.app.use((req, res) => {
-      res.status(404).send({ url: `${req.originalUrl} not found` });
+    this.routeBuilders.forEach((builder) => {
+      const routes = builder.getRoutes();
+      routes.forEach((routeData) => {
+        RoutesCollection.addRouteData(routeData.controllerClass, routeData.action,
+            { uri: routeData.uri, httpMethod: routeData.httpMethod });
+        const boundAction = this._bindRouteTo(routeData.controllerClass, routeData.action);
+        this.app.registerRoute(routeData.uri, routeData.httpMethod, boundAction);
+      });
     });
+  }
+
+  _bindRouteTo(controllerClass, method) {
+    const result = [
+      (req, res) => {
+        this._getControllerInstance(controllerClass, req, res)[method]();
+      }];
+
+    return result;
+  }
+
+  _getControllerInstance(ControllerClass, req, res) {
+    return new ControllerClass(
+        {
+          params: req.params,
+          query: req.query,
+          body: req.body,
+          send: (statusCode, resource) => {
+            res.status(statusCode).send(resource);
+          },
+        },
+    );
   }
 }
 

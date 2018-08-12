@@ -4,15 +4,15 @@ const ControllerBase = require('./controllerBase');
 class IndexController extends ControllerBase {
   async index() {
     const getBookURI = this.uriGenerator.getURI(
-        this.uriGenerator.controllers.BooksListController.getBook,
+        'BooksListController_getBook',
     );
 
     const rateBookURI = this.uriGenerator.getURI(
-        this.uriGenerator.controllers.BooksListController.rateBook,
+        'BooksListController_rateBook',
     );
 
     const removeBookURI = this.uriGenerator.getURI(
-        this.uriGenerator.controllers.BooksListController.removeBook,
+        'BooksListController_removeBook',
     );
 
     const resource = halson({ api: 'api v1' });

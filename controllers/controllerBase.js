@@ -1,17 +1,18 @@
+const URIGenerator = require('../routing/uriGenerator');
+
 class ControllerBase {
-  constructor({ uriGenerator, req, res }) {
-    this.uriGenerator = uriGenerator;
-    this.req = req;
-    this.res = res;
-    this.params = this.req.params;
-    this.query = this.req.query;
-    this.body = this.req.body;
+  constructor({ params, query, body, send }) {
+    this.uriGenerator = URIGenerator;
+    this.params = params;
+    this.query = query;
+    this.body = body;
+    this.send = send;
   }
 
   error(err) {
     const status = err.statusCode || err.status;
     const statusCode = status || 500;
-    this.res.status(statusCode).send(err);
+    this.send(statusCode, err);
   }
 
   created(location, data) {
@@ -19,15 +20,15 @@ class ControllerBase {
       this.res.location(location);
     }
 
-    this.res.status(201).send(data);
+    this.send(201, data);
   }
 
   ok(data) {
-    this.res.status(200).send(data);
+    this.send(200, data);
   }
 
   noContent() {
-    this.res.status(204).send();
+    this.send(204);
   }
 }
 
