@@ -1,20 +1,12 @@
 const BookListController = require('./booksListController');
 const Router = require('../routing/router');
 const BooksListRoutesBuilder = require('../routing/routesBuilders/booksListRoutesBuilder');
-const App = require('../app');
-
-jest.mock('../app', () => {
-  return jest.fn().mockImplementation(() => {
-    return { registerRoute: jest.fn(), run: jest.fn() };
-  });
-});
 
 beforeEach(() => {
-  const router = new Router(new App(), [
+  const router = new Router([
     new BooksListRoutesBuilder(),
   ]);
-
-  router.registerRoutes();
+  router.registerRoutes(jest.fn(), jest.fn());
 });
 
 describe('testing BooksListController controller', () => {
