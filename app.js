@@ -57,6 +57,7 @@ class App {
   run() {
     this.repository.registerRepositories();
     this.router.registerRoutes(this._registerRoute, this._createRouteBoundAction);
+    this.expressRouter.use('/auth/token', this.security.issueToken());
     this.express.use('/api/v1', this.expressRouter);
     this.express.use((req, res) => {
       res.status(404).send({ url: `${req.originalUrl} not found` });
