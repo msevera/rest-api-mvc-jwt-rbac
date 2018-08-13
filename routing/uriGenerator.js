@@ -2,13 +2,9 @@ const queryString = require('query-string');
 const RoutesCollection = require('./routesCollection');
 
 class URIGenerator {
-  constructor() {
-    this.routes = RoutesCollection;
-  }
-
   getURI(controllerAction, params, id) {
     const caArray = controllerAction.split('_');
-    const routeData = this.routes[caArray[0]][caArray[1]];
+    const routeData = RoutesCollection[caArray[0]][caArray[1]];
     return new Promise((resolve) => {
       const uri = params ? this._bindParams(routeData.uri, params) : routeData.uri;
       resolve({ id: id || routeData.action, method: routeData.method, uri });
@@ -46,4 +42,4 @@ class URIGenerator {
   }
 }
 
-module.exports = new URIGenerator();
+module.exports = URIGenerator;

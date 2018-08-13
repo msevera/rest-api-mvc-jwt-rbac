@@ -6,7 +6,7 @@ class BooksListController extends ControllerBase {
     try {
       const { id } = this.params;
       const bookModel = new BookModel({ _id: id });
-      const resource = await bookModel.getResource();
+      const resource = await bookModel.getResource(this.uriGenerator);
       this.ok(resource);
     } catch (err) {
       this.error(err);
@@ -18,7 +18,7 @@ class BooksListController extends ControllerBase {
       const { id } = this.params;
       const { rating } = this.body;
       const bookModel = new BookModel({ _id: id, rating });
-      const resource = await bookModel.getResource();
+      const resource = await bookModel.getResource(this.uriGenerator);
       this.ok(resource);
     } catch (err) {
       this.error(err);
