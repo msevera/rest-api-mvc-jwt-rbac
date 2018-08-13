@@ -2,9 +2,11 @@ const BookListController = require('./booksListController');
 const Router = require('../routing/router');
 const BooksListRoutesBuilder = require('../routing/routesBuilders/booksListRoutesBuilder');
 const Repository = require('../repositories/repository');
+const URIGenerator = require('../routing/uriGenerator');
+const Security = require('../security/security');
 
 let repository;
-
+let security;
 beforeEach(() => {
   const router = new Router([
     new BooksListRoutesBuilder(),
@@ -22,41 +24,56 @@ beforeEach(() => {
       }],
   });
   repository.registerRepositories();
+  security = new Security(repository, 'secret');
 });
 
 describe('testing BooksListController controller', () => {
-  test('GetBook action success', async (done) => {
+  test('GetBook action should success', async (done) => {
+    const book = repository.book.getById(0);
+
     const sendFunc = (status, resource) => {
       expect(status).toBe(200);
-      expect(resource.id).toBe(0);
+      expect(resource.id).toBe(book._id);
       done();
     };
-    const controller = new BookListController({ params: { id: 0 }, send: sendFunc, repository });
+    const controller = new BookListController({
+      params: { id: book._id },
+      send: sendFunc,
+      repository,
+      uriGenerator: new URIGenerator(security, 'Guest'),
+    });
     await controller.getBook();
   });
 
-  test('RateBook action success', async (done) => {
+  test('RateBook action should success', async (done) => {
+    const book = repository.book.getById(0);
     const sendFunc = (status, resource) => {
       expect(status).toBe(200);
-      expect(resource.id).toBe(0);
+      expect(resource.id).toBe(book._id);
       expect(resource.rating).toBe(5);
       done();
     };
-    const controller = new BookListController(
-        { params: { id: 0 }, body: { rating: 5 }, send: sendFunc, repository },
-    );
+    const controller = new BookListController({
+      params: { id: book._id },
+      body: { rating: 5 },
+      send: sendFunc,
+      repository,
+      uriGenerator: new URIGenerator(security, 'BasicUser'),
+    });
     await controller.rateBook();
   });
 
-  test('RemoveBook action success', async (done) => {
-    const allBooksLength = repository.book.getAllBooks().length;
-    const expectedResult = allBooksLength - 1;
+  test('RemoveBook action should success', async (done) => {
     const sendFunc = (status) => {
       expect(status).toBe(204);
-      expect(repository.book.getAllBooks().length).toBe(expectedResult);
       done();
     };
-    const controller = new BookListController({ params: { id: 0 }, send: sendFunc, repository });
+    const controller = new BookListController({
+      params: { id: 0 },
+      send: sendFunc,
+      repository,
+      uriGenerator: new URIGenerator(security, 'AdminUser'),
+    });
     await controller.removeBook();
   });
 });

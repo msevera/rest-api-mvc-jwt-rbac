@@ -7,7 +7,7 @@ class BooksListController extends ControllerBase {
       const { id } = this.params;
       const book = this.repository.book.getById(id);
       const bookModel = new BookModel(book);
-      const resource = await bookModel.getResource();
+      const resource = await bookModel.getResource(this.uriGenerator);
       this.ok(resource);
     } catch (err) {
       this.error(err);
@@ -21,7 +21,7 @@ class BooksListController extends ControllerBase {
       this.repository.book.rateBook(id, rating);
       const book = this.repository.book.getById(id);
       const bookModel = new BookModel(book);
-      const resource = await bookModel.getResource();
+      const resource = await bookModel.getResource(this.uriGenerator);
       this.ok(resource);
     } catch (err) {
       this.error(err);

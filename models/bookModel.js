@@ -2,8 +2,8 @@ const Model = require('./model');
 const URIGenerator = require('../routing/uriGenerator');
 
 class BookModel extends Model {
-  constructor(data, uriGenerator) {
-    super(uriGenerator);
+  constructor(data) {
+    super();
     this.uriGenerator = URIGenerator;
     this.id = data._id;
     this.name = data.name;
@@ -12,7 +12,7 @@ class BookModel extends Model {
     this.rating = data.rating;
   }
 
-  async getResource() {
+  async getResource(uriGenerator) {
     const resource = super.getResource({
       id: this.id,
       name: this.name,
@@ -21,12 +21,12 @@ class BookModel extends Model {
       rating: this.rating,
     });
 
-    await this.addLinks(resource);
+    await this.addLinks(resource, uriGenerator);
     return resource;
   }
 
-  async addLinks(resource) {
-    const removeURI = await this.uriGenerator.getURI(
+  async addLinks(resource, uriGenerator) {
+    const removeURI = await uriGenerator.getURI(
         'BooksListController_removeBook',
         { id: this.id },
     );
@@ -34,7 +34,7 @@ class BookModel extends Model {
       resource.addLink(removeURI.id, removeURI);
     }
 
-    const rateURI = await this.uriGenerator.getURI(
+    const rateURI = await uriGenerator.getURI(
         'BooksListController_rateBook',
         { id: this.id },
     );
