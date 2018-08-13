@@ -1,10 +1,8 @@
 const Model = require('./model');
-const URIGenerator = require('../routing/uriGenerator');
 
 class BookModel extends Model {
   constructor(data) {
     super();
-    this.uriGenerator = URIGenerator;
     this.id = data._id;
     this.name = data.name;
     this.author = data.author;
