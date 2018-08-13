@@ -48,7 +48,13 @@ describe('testing BooksListController controller', () => {
       done();
     };
     const controller = new BookListController(
-        { params: { id: book._id }, body: { rating: 5 }, send: sendFunc, repository, uriGenerator: new URIGenerator() },
+        {
+          params: { id: book._id },
+          body: { rating: 5 },
+          send: sendFunc,
+          repository,
+          uriGenerator: new URIGenerator(),
+        },
     );
     await controller.rateBook();
   });
@@ -62,7 +68,9 @@ describe('testing BooksListController controller', () => {
       expect(repository.book.getAllBooks().length).toBe(expectedResult);
       done();
     };
-    const controller = new BookListController({ params: { id: book._id }, send: sendFunc, repository, uriGenerator: new URIGenerator() });
+    const controller = new BookListController(
+        { params: { id: book._id }, send: sendFunc, repository, uriGenerator: new URIGenerator() },
+    );
     await controller.removeBook();
   });
 });
