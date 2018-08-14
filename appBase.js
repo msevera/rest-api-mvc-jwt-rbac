@@ -13,18 +13,16 @@ class AppBase {
     throw new Error('Not Implemented Exception');
   }
 
-  _createRouteBoundAction(controllerClass, method, isSecure) {
+  _createRouteBoundAction(controllerClass, method) {
     const result = [
       (req, res) => {
         this._buildControllerInstance(controllerClass, req, res)[method]();
       }];
 
-    if (isSecure) {
-      result.unshift(
-          this.security.authenticate(),
-          this.security.authorise(controllerClass.name, method),
-      );
-    }
+    result.unshift(
+        this.security.authenticate(),
+        this.security.authorise(controllerClass.name, method),
+    );
 
     return result;
   }
