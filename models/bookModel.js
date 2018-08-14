@@ -24,6 +24,15 @@ class BookModel extends ModelBase {
   }
 
   async addLinks(resource, uriGenerator) {
+    const getURI = await uriGenerator.getURI(
+        'BooksListController_getBook',
+        { id: this.id },
+        '_self',
+    );
+    if (getURI) {
+      resource.addLink(getURI.id, getURI);
+    }
+
     const removeURI = await uriGenerator.getURI(
         'BooksListController_removeBook',
         { id: this.id },
