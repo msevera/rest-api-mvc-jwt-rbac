@@ -1,6 +1,6 @@
-const Model = require('./model');
+const ModelBase = require('./modelBase');
 
-class BookModel extends Model {
+class BookModel extends ModelBase {
   constructor(data) {
     super();
     this.id = data._id;

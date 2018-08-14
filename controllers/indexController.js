@@ -3,6 +3,16 @@ const ControllerBase = require('./controllerBase');
 
 class IndexController extends ControllerBase {
   async index() {
+    const indexURI = this.uriGenerator.getURI(
+        'IndexController_index',
+        {},
+        '_self',
+    );
+
+    const getBooksURI = this.uriGenerator.getURI(
+        'BooksListController_getBooks',
+    );
+
     const getBookURI = this.uriGenerator.getURI(
         'BooksListController_getBook',
     );
@@ -18,6 +28,8 @@ class IndexController extends ControllerBase {
     const resource = halson({ api: 'api v1' });
     try {
       const links = await Promise.all([
+        indexURI,
+        getBooksURI,
         getBookURI,
         rateBookURI,
         removeBookURI,

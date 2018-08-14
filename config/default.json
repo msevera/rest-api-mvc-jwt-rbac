@@ -1,7 +1,6 @@
 {
-  "debug": true,
   "api": {
-    "host": "",
+    "host": "localhost",
     "port": 3000,
     "security": {
       "jwtSecret": "secret"
