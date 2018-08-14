@@ -14,7 +14,7 @@ class URIGenerator {
       this.security.hasAccess(this.role, routeData.controller, routeData.action, (err, can) => {
         if (can) {
           const uri = params ? this._bindParams(routeData.uri, params) : routeData.uri;
-          resolve({ id: id || routeData.action, method: routeData.method, uri });
+          resolve({ id: id || routeData.action, method: routeData.httpMethod, uri });
         } else {
           resolve(null);
         }
