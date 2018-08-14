@@ -43,7 +43,7 @@ class BookModel extends ModelBase {
 
     const rateURI = await uriGenerator.getURI(
         'BooksListController_rateBook',
-        { id: this.id }
+        { id: this.id },
     );
     if (rateURI) {
       resource.addLink(rateURI.id, rateURI);
