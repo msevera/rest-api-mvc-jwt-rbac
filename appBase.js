@@ -13,6 +13,10 @@ class AppBase {
     throw new Error('Not Implemented Exception');
   }
 
+  _registerAuthRoute(){
+
+  }
+
   _createRouteBoundAction(controllerClass, method) {
     const result = [
       (req, res) => {
@@ -49,6 +53,7 @@ class AppBase {
   run() {
     this.repository.registerRepositories();
     this.router.registerRoutes(this._registerRoute, this._createRouteBoundAction);
+    this._registerAuthRoute(this.security.issueToken());
   }
 }
 

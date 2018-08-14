@@ -18,9 +18,12 @@ class ExpressApp extends AppBase {
     this.expressRouter.route(uri)[httpMethod](boundAction);
   }
 
+  _registerAuthRoute(boundAction) {
+    this.expressRouter.route('/auth/token').post(boundAction);
+  }
+
   run() {
     super.run();
-    this.expressRouter.route('/auth/token').post(this.security.issueToken());
     this.express.use('/api/v1', this.expressRouter);
     this.express.use((req, res) => {
       res.status(404).send({ url: `${req.originalUrl} not found` });
