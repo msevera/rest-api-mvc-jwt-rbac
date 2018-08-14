@@ -5,10 +5,13 @@ class URIGenerator {
   getURI(controllerAction, params, id) {
     const caArray = controllerAction.split('_');
     const routeData = RoutesCollection[caArray[0]][caArray[1]];
-    return new Promise((resolve) => {
-      const uri = params ? this._bindParams(routeData.uri, params) : routeData.uri;
-      resolve({ id: id || routeData.action, method: routeData.method, uri });
-    });
+    const uri = params ? this._bindParams(routeData.uri, params) : routeData.uri;
+
+    return {
+      id: id || routeData.action,
+      method: routeData.method,
+      uri,
+    };
   }
 
   _bindParams(uri, params) {

@@ -1,18 +1,18 @@
 const RoutesCollection = require('./routesCollection');
 
 class Router {
-  constructor(routeBuilders) {
-    this.routeBuilders = routeBuilders;
+  constructor(routes) {
+    this.routes = routes;
   }
 
-  registerRoutes(registerRouteCallback, createRouteBoundAction) {
-    this.routeBuilders.forEach((builder) => {
+  registerRoutes(registerRoute, createRouteBoundAction) {
+    this.routes.forEach((builder) => {
       const routes = builder.getRoutes();
       routes.forEach((routeData) => {
         RoutesCollection.addRouteData(routeData.controllerClass, routeData.action,
             { uri: routeData.uri, httpMethod: routeData.httpMethod });
         const boundAction = createRouteBoundAction(routeData.controllerClass, routeData.action);
-        registerRouteCallback(routeData.uri, routeData.httpMethod, boundAction);
+        registerRoute(routeData.uri, routeData.httpMethod, boundAction);
       });
     });
   }

@@ -1,6 +1,6 @@
 const BookListController = require('./booksListController');
 const Router = require('../routing/router');
-const BooksListRoutesBuilder = require('../routing/routesBuilders/booksListRoutesBuilder');
+const BooksListRoutesBuilder = require('../routing/routes/booksListRoutes');
 const Repository = require('../repositories/repository');
 const URIGenerator = require('../routing/uriGenerator');
 
