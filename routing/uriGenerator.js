@@ -9,8 +9,8 @@ class URIGenerator {
 
   getURI(controllerAction, params, id) {
     return new Promise((resolve) => {
-      const routeMeta = controllerAction.split('_');
-      const routeData = RoutesCollection[routeMeta[0]][routeMeta[1]];
+      const caArray = controllerAction.split('_');
+      const routeData = RoutesCollection[caArray[0]][caArray[1]];
       this.security.hasAccess(this.role, routeData.controller, routeData.action, (err, can) => {
         if (can) {
           const uri = params ? this._bindParams(routeData.uri, params) : routeData.uri;
