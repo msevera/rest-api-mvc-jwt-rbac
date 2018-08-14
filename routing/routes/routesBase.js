@@ -1,10 +1,10 @@
-class RoutesBuilderBase {
+class RoutesBase {
   constructor(controllerClass) {
     this.routes = [];
     this.ControllerClass = controllerClass;
   }
 
-  buildRoute(uri, httpMethod, action, isSecure = true) {
+  addRoute(uri, httpMethod, action, isSecure = true) {
     this.routes.push({
       controllerClass: this.ControllerClass,
       action,
@@ -15,4 +15,4 @@ class RoutesBuilderBase {
   }
 }
 
-module.exports = RoutesBuilderBase;
+module.exports = RoutesBase;

@@ -1,6 +1,6 @@
 const BookListController = require('./booksListController');
 const Router = require('../routing/router');
-const BooksListRoutesBuilder = require('../routing/routesBuilders/booksListRoutesBuilder');
+const BooksListRoutesBuilder = require('../routing/routes/booksListRoutes');
 const Repository = require('../repositories/repository');
 const URIGenerator = require('../routing/uriGenerator');
 const Security = require('../security/security');
@@ -64,11 +64,11 @@ describe('testing BooksListController controller', () => {
 
   test('RemoveBook action success', async (done) => {
     const book = repository.book.getById(0);
-    const allBooksLength = repository.book.getAllBooks().length;
+    const allBooksLength = repository.book.getAll().length;
     const expectedResult = allBooksLength - 1;
     const sendFunc = (status) => {
       expect(status).toBe(204);
-      expect(repository.book.getAllBooks().length).toBe(expectedResult);
+      expect(repository.book.getAll().length).toBe(expectedResult);
       done();
     };
     const controller = new BookListController({

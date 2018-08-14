@@ -1,28 +1,21 @@
 const config = require('config');
-const App = require('./app');
+const ExpressApp = require('./expressApp');
 const Router = require('./routing/router');
 const Repository = require('./repositories/repository');
-const IndexRoutesBuilder = require('./routing/routesBuilders/indexRoutesBuilder');
-const BooksListRoutesBuilder = require('./routing/routesBuilders/booksListRoutesBuilder');
 const db = require('./mock/db');
+const IndexRoutes = require('./routing/routes/indexRoutes');
+const BooksListRoutes = require('./routing/routes/booksListRoutes');
 const Security = require('./security/security');
 
-class Server {
-  constructor() {
-    this.repository = new Repository(db);
-    this.security = new Security(this.repository, config.get('api.security.jwtSecret'));
-    this.router = new Router([
-      new IndexRoutesBuilder(),
-      new BooksListRoutesBuilder(),
-    ], this.router);
+const router = new Router(
+    [
+      new IndexRoutes(),
+      new BooksListRoutes(),
+    ],
+);
 
-    this.app = new App(this.router, this.repository, this.security);
-  }
+const repository = new Repository(db);
+const security = new Security(this.repository, config.get('api.security.jwtSecret'));
+const expressApp = new ExpressApp(router, repository, security);
 
-  start() {
-    this.app.run();
-  }
-}
-
-const server = new Server();
-server.start();
+expressApp.run();

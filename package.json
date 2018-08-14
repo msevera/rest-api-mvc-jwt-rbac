@@ -4,7 +4,7 @@
   "main": "api.js",
   "scripts": {
     "test": "jest",
-    "start": "node server.js"
+    "start": "node expressApp.js"
   },
   "author": "",
   "license": "ISC",

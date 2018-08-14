@@ -16,7 +16,7 @@ class ControllerBase {
 
   created(location, data) {
     if (location) {
-      this.res.location(location);
+      this.send(201, null, location);
     }
 
     this.send(201, data);

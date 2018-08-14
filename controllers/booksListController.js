@@ -2,9 +2,25 @@ const ControllerBase = require('./controllerBase');
 const BookModel = require('../models/bookModel');
 
 class BooksListController extends ControllerBase {
-  async getBook() {
+  async getBooks() {
     try {
-      const { id } = this.params;
+      const books = this.repository.book.getAll();
+      const resources = await Promise.all(books.map(async (book) => {
+        const model = new BookModel(book);
+        const resource = await model.getResource(this.uriGenerator);
+        return resource;
+      }));
+
+      this.ok(resources);
+    } catch (err) {
+      this.error(err);
+    }
+  }
+
+  async getBook() {
+    const { id } = this.params;
+
+    try {
       const book = this.repository.book.getById(id);
       const bookModel = new BookModel(book);
       const resource = await bookModel.getResource(this.uriGenerator);
@@ -15,9 +31,10 @@ class BooksListController extends ControllerBase {
   }
 
   async rateBook() {
+    const { id } = this.params;
+    const { rating } = this.body;
+
     try {
-      const { id } = this.params;
-      const { rating } = this.body;
       this.repository.book.rateBook(id, rating);
       const book = this.repository.book.getById(id);
       const bookModel = new BookModel(book);
@@ -29,8 +46,9 @@ class BooksListController extends ControllerBase {
   }
 
   async removeBook() {
+    const { id } = this.params;
+
     try {
-      const { id } = this.params;
       this.repository.book.removeById(id);
       this.noContent();
     } catch (err) {
