@@ -13,8 +13,8 @@ class AppBase {
     throw new Error('Not Implemented Exception');
   }
 
-  _registerAuthRoute(){
-
+  _registerAuthRoute() {
+    throw new Error('Not Implemented Exception');
   }
 
   _createRouteBoundAction(controllerClass, method) {
