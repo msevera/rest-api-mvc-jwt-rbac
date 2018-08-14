@@ -6,9 +6,9 @@ class BooksListController extends ControllerBase {
     try {
       const books = this.repository.book.getAll();
       const resources = await Promise.all(books.map(async (book) => {
-          const model = new BookModel(book);
-          const resource = await model.getResource(this.uriGenerator);
-          return resource;
+        const model = new BookModel(book);
+        const resource = await model.getResource(this.uriGenerator);
+        return resource;
       }));
 
       this.ok(resources);

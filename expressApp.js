@@ -4,8 +4,8 @@ const config = require('config');
 const AppBase = require('./appBase');
 
 class ExpressApp extends AppBase {
-  constructor(router) {
-    super(router);
+  constructor(router, repository) {
+    super(router, repository);
     this.port = config.get('api.port');
     this.host = config.get('api.host');
     this.express = express();

@@ -1,8 +1,9 @@
 const URIGenerator = require('./routing/uriGenerator');
 
 class AppBase {
-  constructor(router) {
+  constructor(router, repository) {
     this.router = router;
+    this.repository = repository;
     this._registerRoute = this._registerRoute.bind(this);
     this._createRouteBoundAction = this._createRouteBoundAction.bind(this);
   }

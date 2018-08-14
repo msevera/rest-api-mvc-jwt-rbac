@@ -6,7 +6,7 @@ class BookRepository extends RepositoryBase {
     this.booksCollection = db.books;
   }
 
-  getAllBooks() {
+  getAll() {
     return this.booksCollection;
   }
 
