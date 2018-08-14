@@ -27,6 +27,7 @@ class RBACAuthorization {
           'index',
         ],
         BooksListController: [
+          'getBooks',
           'getBook',
           'removeBook',
           'rateBook',
@@ -35,6 +36,7 @@ class RBACAuthorization {
       grants: {
         Guest: [
           'index_IndexController',
+          'getBooks_BooksListController',
           'getBook_BooksListController',
         ],
         BasicUser: [
