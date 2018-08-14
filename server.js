@@ -15,7 +15,7 @@ const router = new Router(
 );
 
 const repository = new Repository(db);
-const security = new Security(this.repository, config.get('api.security.jwtSecret'));
+const security = new Security(repository, config.get('api.security.jwtSecret'));
 const expressApp = new ExpressApp(router, repository, security);
 
 expressApp.run();
