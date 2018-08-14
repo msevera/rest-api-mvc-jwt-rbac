@@ -9,7 +9,7 @@ class URIGenerator {
 
     return {
       id: id || routeData.action,
-      method: routeData.method,
+      method: routeData.httpMethod,
       uri,
     };
   }
